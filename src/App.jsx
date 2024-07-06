@@ -1,26 +1,64 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import Root from "./pages/Root";
-import DashboardSection from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Billing from "./pages/Billing";
 import TablesSection from "./pages/TablesSection";
-import NotificationsPage from "./pages/Notifications";
+import PostsPage from "./pages/PostsPage";
 import Profile from "./pages/Profile";
+// import Billing from "./pages/Billing";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     children: [
-      { index: true, element: <DashboardSection /> },
-      { path: "tables", element: <TablesSection /> },
-      { path: "billing", element: <Billing /> },
-      { path: "notifications", element: <NotificationsPage /> },
-      { path: "profile", element: <Profile /> },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "tables",
+        element: (
+          <PrivateRoute>
+            <TablesSection />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "posts",
+        element: (
+          <PrivateRoute>
+            <PostsPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      // { path: "billing", element: <Billing /> },
     ],
   },
   { path: "admin", element: <Login /> },
 ]);
+
+function PrivateRoute({ children }) {
+  const isAuthenticated = localStorage.getItem("admin-jwt");
+  return isAuthenticated ? children : <Navigate to="../admin" />;
+}
 
 function App() {
   return <RouterProvider router={router} />;
