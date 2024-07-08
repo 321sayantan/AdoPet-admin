@@ -1,7 +1,48 @@
-import { Link } from "react-router-dom";
+// import { v4 as generateToken } from "uuid";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import LoginForm from "../components/LoginForm";
+import { useState, useContext } from "react";
+import { AuthContext } from "../store/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [error, setError] = useState(null);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const loginDataHandler = async (loginData) => {
+    try {
+      const response = await toast.promise(
+        fetch("http://localhost:5000/admin/login", {
+          method: "POST",
+          body: JSON.stringify(loginData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }),
+        {
+          pending: "Logging in...",
+        }
+      );
+
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok) {
+        navigate("..");
+        login(result.token);
+        toast.success(result.Message);
+        setError(null);
+      } else {
+        toast.error(result.msg);
+        setError(result.msg);
+      }
+    } catch (err) {
+      console.error("Error submitting form! ", err);
+    }
+  };
+
   return (
     <div
       className="page-header align-items-start min-vh-100"
@@ -29,32 +70,7 @@ const Login = () => {
                 </div>
               </div>
               <div className="card-body">
-                <form role="form" className="text-start">
-                  <div className="input-group input-group-outline my-3">
-                    <label className="form-label">Email</label>
-                    <input type="email" className="form-control" />
-                  </div>
-                  <div className="input-group input-group-outline mb-3">
-                    <label className="form-label">Password</label>
-                    <input type="password" className="form-control" />
-                  </div>
-                  <div className="d-flex align-items-center justify-content-end mb-3">
-                    <Link
-                      className="text-sm fw-semibold cursor-pointer"
-                      to="../forgot-password"
-                    >
-                      Forgot Password?
-                    </Link>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      type="button"
-                      className="btn bg-gradient-primary w-100 my-4 mb-2"
-                    >
-                      Sign in
-                    </button>
-                  </div>
-                </form>
+                <LoginForm error={error} onSubmit={loginDataHandler} />
               </div>
             </div>
           </div>

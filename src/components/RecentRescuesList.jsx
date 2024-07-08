@@ -1,16 +1,17 @@
-import { rescuePostsRecent as recentRescues } from "../misc/posts";
+/* eslint-disable react/prop-types */
+// import { rescuePostsRecent as recentRescues } from "../misc/posts";
 
-const RecentRescuesList = () => {
+const RecentRescuesList = ({ posts }) => {
   return (
     <>
-      {recentRescues.length > 0 ? (
+      {posts.length > 0 ? (
         <tbody>
-          {recentRescues.map((post) => (
+          {posts.map((post) => (
             <tr key={post.id}>
               <td>
                 <div className="d-flex px-2">
                   <img
-                    src={post.vet_image}
+                    src={post.images[0].image}
                     className="avatar avatar-sm rounded-circle me-2"
                     alt=""
                   />
@@ -19,14 +20,16 @@ const RecentRescuesList = () => {
                       {post.vet_category}
                     </h6>
                     <p className="text-danger font-weight-bold text-xs mt-1 mb-0">
-                      {post.health_status[1]}
+                      {post.vet_health_status[0]}
                     </p>
                   </div>
                 </div>
               </td>
               <td className="align-top text-center">
                 <span className="me-2 text-xs text-info font-weight-bold">
-                  {post.rescue_date}
+                  {new Date(post.timestamp).getDate()}/
+                  {new Date(post.timestamp).getMonth()}/
+                  {new Date(post.timestamp).getFullYear()}
                 </span>
               </td>
             </tr>
