@@ -28,13 +28,13 @@ const AuthContextProvider = ({ children }) => {
       setIsAuthenticated(true);
       setAdminJwt(token);
     }
-    localStorage.setItem("jwt", token);
+    localStorage.setItem("admin-jwt", token);
   }
 
   function logout() {
     setIsAuthenticated(false);
     setAdminJwt(null);
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("admin-jwt");
   }
 
   // async function isTokenVerified() {

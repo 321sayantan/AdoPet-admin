@@ -1,16 +1,17 @@
-import { adoptionPostsRecent as recentAdopts } from "../misc/posts";
+/* eslint-disable react/prop-types */
+// import { adoptionPostsRecent as recentAdopts } from "../misc/posts";
 
-const RecentAdoptionsList = () => {
+const RecentAdoptionsList = ({ posts }) => {
   return (
     <>
-      {recentAdopts.length > 0 ? (
+      {posts.length > 0 ? (
         <tbody>
-          {recentAdopts.map((post) => (
+          {posts.map((post) => (
             <tr key={post.id}>
               <td>
                 <div className="d-flex px-2">
                   <img
-                    src={post.vet_image}
+                    src={post.image}
                     className="avatar avatar-sm rounded-circle me-2"
                     alt=""
                   />
@@ -26,18 +27,18 @@ const RecentAdoptionsList = () => {
               </td>
               <td className="align-middle text-center">
                 <span className="me-2 text-xs font-weight-bold">
-                  {post.owner}
+                  {post.donor_name}
                 </span>
               </td>
               <td className="text-center">
                 <span
                   className={`badge badge-sm ${
-                    post.status === "available"
+                    post.adopted
                       ? "bg-gradient-success"
                       : "bg-gradient-secondary"
                   }`}
                 >
-                  {post.status}
+                  {post.adopted ? "adopted" : "available"}
                 </span>
               </td>
             </tr>

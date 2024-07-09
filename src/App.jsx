@@ -5,12 +5,13 @@ import {
   Navigate,
 } from "react-router-dom";
 import Root from "./pages/Root";
-import Dashboard from "./pages/Dashboard";
+import { Dashboard } from "./pages/Dashboard";
 import Login from "./pages/Login";
 import TablesSection from "./pages/TablesSection";
 import PostsPage from "./pages/PostsPage";
 import Profile from "./pages/Profile";
 // import Billing from "./pages/Billing";
+import { loader } from "./misc/loaders";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
             <Dashboard />
           </PrivateRoute>
         ),
+        loader: loader
       },
       {
         path: "tables",
