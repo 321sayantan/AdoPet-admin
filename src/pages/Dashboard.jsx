@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { Await, useLoaderData } from "react-router-dom";
 import Footer from "../components/Footer";
 import MiniCountCard from "../components/MiniCountCard";
@@ -31,7 +31,6 @@ export const Dashboard = () => {
   );
   const fallback2 = <RecentAdoptionsSkeleton />;
   const fallback3 = <RecentRescuesSkeleton />;
-
 
   return (
     <>
@@ -116,7 +115,7 @@ export const Dashboard = () => {
         </div>
 
         <div className="row mb-4 mt-4">
-          <div className="col-lg-8 col-md-6 mb-md-0 mb-4">
+          <div className="col-lg-8 col-md-8 mb-md-0 mb-4">
             <div className="card">
               <div className="card-header pb-0">
                 <div className="row">
@@ -163,7 +162,7 @@ export const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-4 col-md-6">
+          <div className="col-lg-4 col-md-4">
             <div className="card h-100">
               <div className="card-header pb-0">
                 <h6>Rescue Requests</h6>

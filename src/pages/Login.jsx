@@ -30,9 +30,9 @@ const Login = () => {
       console.log(result);
 
       if (response.ok) {
-        navigate("..");
-        login(result.token);
         toast.success(result.Message);
+        login(result.token);
+        navigate("..");
         setError(null);
       } else {
         toast.error(result.msg);

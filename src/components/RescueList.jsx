@@ -1,17 +1,27 @@
-import { rescuePosts as rescues } from "../misc/posts";
+/* eslint-disable react/prop-types */
+import { AnimatePresence } from "framer-motion";
+import Modal from "./Modal";
+import { useState } from "react";
 
-const RescueList = () => {
+const RescueList = ({ rescues, onDelete }) => {
+  const [open, setOpen] = useState(null);
+
+  const closeModal = (id) => {
+    onDelete(id);
+    setOpen(null);
+  };
+
   return (
     <>
       {rescues.length > 0 ? (
         <tbody>
           {rescues.map((post) => (
-            <tr key={post.id}>
+            <tr key={post._id}>
               <td>
                 <div className="d-flex px-2">
                   <div>
                     <img
-                      src={post.vet_image}
+                      src={post.images[0].image}
                       className="avatar avatar-sm rounded-circle me-2"
                       alt="spotify"
                     />
@@ -23,7 +33,7 @@ const RescueList = () => {
               </td>
               <td>
                 <p className="text-sm font-weight-bold mb-0">
-                  {post.health_status.map((item, i) => (
+                  {post.vet_health_status.map((item, i) => (
                     <span key={i}>&nbsp;{item}&#44;</span>
                   ))}
                 </p>
@@ -31,17 +41,17 @@ const RescueList = () => {
               <td>
                 <span
                   className={`badge badge-sm ${
-                    post.status === "rescued"
+                    post.rescued
                       ? "bg-gradient-success"
                       : "bg-gradient-secondary"
                   }`}
                 >
-                  {post.status}
+                  {post.rescued ? "rescued" : "pending"}
                 </span>
               </td>
               <td className="align-middle text-center">
                 <span className="me-2 text-xs font-weight-bold">
-                  {post.owner}
+                  {post.rescuer_name}
                 </span>
               </td>
               <td className="align-middle">
@@ -57,6 +67,7 @@ const RescueList = () => {
                     type="button"
                     className="text-primary font-weight-bold text-sm fs-5"
                     style={{ background: "none", border: "0", outline: "0" }}
+                    onClick={() => setOpen(post._id)}
                   >
                     Delete
                   </button>
@@ -70,6 +81,53 @@ const RescueList = () => {
           <h2 className="text-warning"></h2>
         </div>
       )}
+
+      <AnimatePresence>
+        {open && (
+          <Modal
+            title="Fatal !"
+            className="deletePost-confirm-modal"
+            onClose={() => setOpen(null)}
+          >
+            <div className="modal-body py-3">
+              <h5
+                className="d-flex align-items-center"
+                style={{ fontWeight: "400" }}
+              >
+                <i
+                  className="material-icons opacity-10"
+                  style={{ fontSize: "2.2rem", color: "#e17900" }}
+                >
+                  error
+                </i>
+                <span style={{ marginLeft: "0.5rem" }}>
+                  Are you sure to delete this post?
+                </span>
+              </h5>
+
+              <div
+                className="modal-footer px-0"
+                style={{ marginBottom: "-1rem" }}
+              >
+                <button
+                  type="button"
+                  className="btn text-secondary"
+                  onClick={() => setOpen(null)}
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  className="btn text-danger"
+                  onClick={() => closeModal(open)}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

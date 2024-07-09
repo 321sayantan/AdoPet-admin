@@ -1,22 +1,17 @@
-import { useState, useEffect, useContext, forwardRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../store/AuthContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Outlet, Link, NavLink } from "react-router-dom";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  Slide,
-} from "@mui/material";
+import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
+import { AnimatePresence } from "framer-motion";
+
 // import NotificationMenu from "../components/NotificationMenu";
 
-const Root = () => {
+export const Root = () => {
   const [show, setShow] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
   const { isAuthenticated, logout } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,60 +32,63 @@ const Root = () => {
     document.documentElement.scrollTop = 0;
   }
 
-  const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="down" ref={ref} {...props} />;
-  });
-
   const openConfirmDialog = () => {
-    setOpen(true);
+    setOpen((prev) => !prev);
     setShow((prev) => !prev);
   };
 
   const logoutHandler = () => {
     logout();
-    setOpen(false);
-    window.location.reload();
+    setOpen(null);
+    navigate("../admin");
   };
 
   return (
     <>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => setOpen(false)}
-        aria-describedby="alert-dialog-slide-description"
-        className="modal-dialog"
-      >
-        <div className="modal-header">
-          <DialogTitle className="modal-title">Fatal!</DialogTitle>
-        </div>
-        <DialogContent className="modal-content">
-          <DialogContentText
-            id="alert-dialog-slide-description"
-            className="modal-body d-flex align-items-center"
+      <AnimatePresence>
+        {open && (
+          <Modal
+            title="Fatal !"
+            className="deletePost-confirm-modal"
+            onClose={() => setOpen(null)}
           >
-            <i className="material-icons opacity-10">error</i>
-            <span>Are you sure to perform logout?</span>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions className="modal-footer">
-          <Button
-            type="button"
-            className="fw-bold text-secondary"
-            onClick={() => setOpen((prev) => !prev)}
-          >
-            No
-          </Button>
-          <Button
-            type="button"
-            className="fw-bold text-danger"
-            onClick={logoutHandler}
-          >
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <div className="modal-body py-3">
+              <h5
+                className="d-flex align-items-center"
+                style={{ fontWeight: "400" }}
+              >
+                <i
+                  className="material-icons opacity-10"
+                  style={{ fontSize: "2.2rem", color: "#e17900" }}
+                >
+                  error
+                </i>
+                <span style={{ marginLeft: "0.5rem" }}>
+                  Are you sure to logout?
+                </span>
+              </h5>
+
+              <div className="modal-footer px-0" style={{ marginBottom: "-1rem" }}>
+                <button
+                  type="button"
+                  className="btn text-secondary"
+                  onClick={() => setOpen(null)}
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  className="btn text-danger"
+                  onClick={logoutHandler}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
       <div
         className={`g-sidenav-show  bg-gray-100 ${
           show ? "g-sidenav-pinned" : ""
@@ -151,13 +149,26 @@ const Root = () => {
                 <NavLink
                   className={`nav-link text-white ${({ isActive }) =>
                     isActive ? "active bg-gradient-primary" : ""}`}
-                  to="posts"
+                  to="adopt-posts"
                   onClick={() => setShow(false)}
                 >
                   <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i className="material-icons opacity-10">list</i>
+                    <i className="material-icons opacity-10">pets</i>
                   </div>
-                  <span className="nav-link-text ms-1">Posts</span>
+                  <span className="nav-link-text ms-1">Adopt Posts</span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={`nav-link text-white ${({ isActive }) =>
+                    isActive ? "active bg-gradient-primary" : ""}`}
+                  to="rescue-posts"
+                  onClick={() => setShow(false)}
+                >
+                  <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i className="material-icons opacity-10">pets</i>
+                  </div>
+                  <span className="nav-link-text ms-1">Rescue Posts</span>
                 </NavLink>
               </li>
             </ul>
@@ -273,4 +284,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+// export default Root;

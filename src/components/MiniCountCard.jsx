@@ -5,7 +5,7 @@ const MiniCountCard = ({ children, title, countVal, icon, classes }) => {
   useCountUp({
     ref: "countup-val",
     enableScrollSpy: true,
-    scrollSpyDelay: 1000,
+    scrollSpyDelay: 2000,
     scrollSpyOnce: true,
     separator: ",",
   });

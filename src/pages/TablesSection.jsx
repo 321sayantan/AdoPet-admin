@@ -1,9 +1,12 @@
+import { Await, useLoaderData } from "react-router-dom";
 import Footer from "../components/Footer";
 import UsersList from "../components/UsersList";
-// import UsersListSkeleton from "../components/skeletons/UsersListSkeleton";
+import { Suspense } from "react";
+import UsersListSkeleton from "../components/skeletons/UsersListSkeleton";
 
 const TablesSection = () => {
-  // const fallback = <UsersListSkeleton />;
+  const { allUsers } = useLoaderData();
+  const fallback = <UsersListSkeleton />;
 
   return (
     <div className="container-fluid py-4">
@@ -35,7 +38,11 @@ const TablesSection = () => {
                       <th className="text-secondary opacity-7" />
                     </tr>
                   </thead>
-                  <UsersList />
+                  <Suspense fallback={fallback}>
+                    <Await resolve={allUsers}>
+                      {(data) => <UsersList users={data.allUser} />}
+                    </Await>
+                  </Suspense>
                 </table>
               </div>
             </div>

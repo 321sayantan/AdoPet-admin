@@ -6515,7 +6515,7 @@ fieldset:disabled .btn {
   padding: var(--bs-toast-padding-x);
   word-wrap: break-word;
 }
-
+/* 
 .modal {
   --bs-modal-zindex: 1050;
   --bs-modal-width: 500px;
@@ -6792,7 +6792,7 @@ fieldset:disabled .btn {
   .modal-fullscreen-xxl-down .modal-body {
     overflow-y: auto;
   }
-}
+} */
 
 .tooltip {
   --bs-tooltip-zindex: 1070;

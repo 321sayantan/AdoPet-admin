@@ -4,20 +4,15 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Root from "./pages/Root";
+import { Root } from "./pages/Root";
 import { Dashboard } from "./pages/Dashboard";
 import Login from "./pages/Login";
 import TablesSection from "./pages/TablesSection";
-import PostsPage from "./pages/PostsPage";
-import Profile from "./pages/Profile";
+import AdoptPostsPage from "./pages/AdoptPostsPage";
+import RescuePostsPage from "./pages/RescuePostsPage";
+// import Profile from "./pages/Profile";
 // import Billing from "./pages/Billing";
 import { loader } from "./misc/loaders";
-import { lazy } from "react";
-
-// const { Dashboard } = lazy(() => import("./pages/Dashboard"));
-// const DashboardPage = () => {
-//   return <Dashboard/>;
-// };
 
 const router = createBrowserRouter([
   {
@@ -40,24 +35,27 @@ const router = createBrowserRouter([
             <TablesSection />
           </PrivateRoute>
         ),
+        loader: loader,
       },
       {
-        path: "posts",
+        path: "adopt-posts",
         element: (
           <PrivateRoute>
-            <PostsPage />
+            <AdoptPostsPage />
           </PrivateRoute>
         ),
+        loader: loader,
       },
       {
-        path: "profile",
+        path: "rescue-posts",
         element: (
           <PrivateRoute>
-            <Profile />
+            <RescuePostsPage />
           </PrivateRoute>
         ),
+        loader: loader,
       },
-      // { path: "billing", element: <Billing /> },
+      // { path: "profile", element: <Profile /> },
     ],
   },
   { path: "admin", element: <Login /> },
