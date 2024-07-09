@@ -61,6 +61,7 @@ export const Dashboard = () => {
   const fallback2 = <RecentAdoptionsSkeleton />;
   const fallback3 = <RecentRescuesSkeleton />;
 
+
   return (
     <>
       <div className="container-fluid py-4">

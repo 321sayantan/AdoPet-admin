@@ -76,12 +76,17 @@ const Root = () => {
         </DialogContent>
         <DialogActions className="modal-footer">
           <Button
+            type="button"
             className="fw-bold text-secondary"
             onClick={() => setOpen((prev) => !prev)}
           >
             No
           </Button>
-          <Button className="fw-bold text-danger" onClick={logoutHandler}>
+          <Button
+            type="button"
+            className="fw-bold text-danger"
+            onClick={logoutHandler}
+          >
             Yes
           </Button>
         </DialogActions>

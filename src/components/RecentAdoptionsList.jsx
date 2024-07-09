@@ -7,7 +7,7 @@ const RecentAdoptionsList = ({ posts }) => {
       {posts.length > 0 ? (
         <tbody>
           {posts.map((post) => (
-            <tr key={post.id}>
+            <tr key={post._id}>
               <td>
                 <div className="d-flex px-2">
                   <img

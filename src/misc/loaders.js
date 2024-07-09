@@ -22,9 +22,7 @@ async function loadDashboardData() {
 }
 
 export function loader() {
-    setTimeout(() => {
-        return defer({
-            dashboardData: loadDashboardData(),
-        });
-    }, 1000)
+    return defer({
+        dashboardData: loadDashboardData(),
+    });
 }
