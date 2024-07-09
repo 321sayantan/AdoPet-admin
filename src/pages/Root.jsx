@@ -1,10 +1,30 @@
-import { Outlet, Link, NavLink } from "react-router-dom";
-import UIsettingsPanel from "../components/UIsettingsPanel";
+import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
 import NotificationMenu from "../components/NotificationMenu";
-import { useState } from "react";
 
 const Root = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // <!-- AOS initialisation -->
+    AOS.init({
+      offset: 100,
+      duration: 700,
+      easing: "ease-in-out",
+      delay: 400,
+      once: true,
+    });
+    // <!-- //AOS init -->
+  });
+
+  // When the user clicks on the button, scroll to the top of the document
+  function goToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 
   return (
     <div
@@ -23,7 +43,7 @@ const Root = () => {
             id="iconSidenav"
             onClick={() => setShow(false)}
           />
-          <Link className="navbar-brand m-0" href="" target="_blank">
+          <Link className="navbar-brand m-0" to="">
             <img
               src="https://res.cloudinary.com/dkf5lwjqr/image/upload/v1718507922/adopet/ztzbsifnvyimgetwadxt.png"
               height="80"
@@ -42,6 +62,7 @@ const Root = () => {
                 className={`nav-link text-white ${({ isActive }) =>
                   isActive ? "active bg-gradient-primary" : ""}`}
                 to=""
+                onClick={() => setShow(false)}
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">dashboard</i>
@@ -54,35 +75,25 @@ const Root = () => {
                 className={`nav-link text-white ${({ isActive }) =>
                   isActive ? "active bg-gradient-primary" : ""}`}
                 to="tables"
+                onClick={() => setShow(false)}
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">table_view</i>
+                  <i className="material-icons opacity-10">group</i>
                 </div>
-                <span className="nav-link-text ms-1">Tables</span>
+                <span className="nav-link-text ms-1">Users</span>
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink
                 className={`nav-link text-white ${({ isActive }) =>
                   isActive ? "active bg-gradient-primary" : ""}`}
-                to="billing"
+                to="posts"
+                onClick={() => setShow(false)}
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">receipt_long</i>
+                  <i className="material-icons opacity-10">list</i>
                 </div>
-                <span className="nav-link-text ms-1">Billing</span>
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className={`nav-link text-white ${({ isActive }) =>
-                  isActive ? "active bg-gradient-primary" : ""}`}
-                to="notifications"
-              >
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">notifications</i>
-                </div>
-                <span className="nav-link-text ms-1">Notifications</span>
+                <span className="nav-link-text ms-1">Posts</span>
               </NavLink>
             </li>
           </ul>
@@ -116,8 +127,11 @@ const Root = () => {
             >
               <div className="ms-md-auto pe-md-3 d-flex align-items-center">
                 <div className="input-group input-group-outline">
-                  <label className="form-label">Type here...</label>
-                  <input type="text" className="form-control" />
+                  <input
+                    type="search"
+                    className="form-control"
+                    placeholder="Type here..."
+                  />
                 </div>
               </div>
               <ul className="navbar-nav  justify-content-end">
@@ -150,7 +164,7 @@ const Root = () => {
                     <button
                       type="button"
                       className="profile-icon d-flex justify-content-center align-items-center"
-                      // onClick={() => setShowProfile(true)}
+                      onClick={() => navigate("../profile")}
                     >
                       <i className="material-icons opacity-10">person</i>
                     </button>
@@ -167,9 +181,17 @@ const Root = () => {
         {/* //component pages render here */}
       </main>
 
-      {/* settings panel for UI */}
-      <UIsettingsPanel />
-      {/* //settings panel for UI */}
+      {/* Go to top button */}
+      {/* <GotoTopBtn /> */}
+      <div className="fixed-plugin">
+        <button
+          onClick={goToTop}
+          className="fixed-plugin-button text-dark position-fixed px-3 py-2"
+        >
+          <i className="material-icons py-2">navigation</i>
+        </button>
+      </div>
+      {/* //Go to top button */}
     </div>
   );
 };
