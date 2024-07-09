@@ -12,35 +12,6 @@ import {
 
 export const Dashboard = () => {
   const { dashboardData } = useLoaderData();
-  // const [dashboardData, setDashboardData] = useState(null)
-
-  // async function loadDashboardData(adminJwt) {
-  //   try {
-  //     console.log(adminJwt);
-  //     const response = await fetch("http://localhost:5000/admin/dashboard", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         'authorization': `Bearer ${adminJwt}`,
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     if (!response.ok) {
-  //       throw new Error(data || "Failed to fetch");
-  //     }
-  //     console.log(data);
-  //     setDashboardData(data)
-  //     // return data;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-  // useEffect(() => {
-  //   console.log('Inside Dashboard useffect')
-  //   const adminJwt = localStorage.getItem("admin-jwt");
-  //   if(adminJwt){
-  //     loadDashboardData(adminJwt);
-  //   }
-  // }, []);
 
   const fallback1 = (
     <>
