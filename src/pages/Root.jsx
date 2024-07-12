@@ -68,7 +68,10 @@ export const Root = () => {
                 </span>
               </h5>
 
-              <div className="modal-footer px-0" style={{ marginBottom: "-1rem" }}>
+              <div
+                className="modal-footer px-0"
+                style={{ marginBottom: "-1rem" }}
+              >
                 <button
                   type="button"
                   className="btn text-secondary"
@@ -199,19 +202,10 @@ export const Root = () => {
           >
             <div className="container-fluid py-1 px-3">
               <div
-                className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+                className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end"
                 id="navbar"
               >
-                <div className="ms-md-auto pe-md-3 d-flex align-items-center">
-                  <div className="input-group input-group-outline">
-                    <input
-                      type="search"
-                      className="form-control"
-                      placeholder="Type here..."
-                    />
-                  </div>
-                </div>
-                <ul className="navbar-nav  justify-content-end">
+                <ul className="navbar-nav">
                   <li className="nav-item d-xl-none px-3 d-flex align-items-center">
                     <div
                       className="nav-link text-body p-0 cursor-pointer"
@@ -235,7 +229,7 @@ export const Root = () => {
                     <i className="fa fa-bell cursor-pointer" />
                   </strong>
                   <NotificationMenu />
-                </li> */}
+                  </li> */}
                   <li className="nav-item d-flex align-items-center">
                     {isAuthenticated ? (
                       <div className="auth-user authenticated">

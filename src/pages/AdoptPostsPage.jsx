@@ -1,16 +1,29 @@
 import { Await, useLoaderData, useNavigate } from "react-router-dom";
+import { Suspense, useContext,useState } from "react";
 import { toast } from "react-toastify";
-import { Suspense, useContext } from "react";
+import { Alert } from "@mui/material";
 import AdoptionsList from "../components/AdoptionsList";
 import Footer from "../components/Footer";
+import SearchBox from "../components/SearchBox";
 import { AdoptPostsSkeleton } from "../components/skeletons/PostsSkeleton";
 import { AuthContext } from "../store/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFilteredAdoptposts } from "../misc/httpRequests";
 
 const AdoptPostsPage = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { allAdoptPost } = useLoaderData();
   const { adminJwt } = useContext(AuthContext);
   const navigate = useNavigate();
   const fallback = <AdoptPostsSkeleton />;
+  let content, alertContent;
+
+  const {data,isLoading, isError,error} = useQuery({
+    queryKey: ['filteredAdoptPosts',{searchTerm}],
+    queryFn: ({ signal, queryKey }) =>
+      fetchFilteredAdoptposts({ signal, ...queryKey[1] }),
+    enabled: searchTerm !== undefined,
+  })
 
   const deletePostHandler = async (id) => {
     try {
@@ -43,20 +56,57 @@ const AdoptPostsPage = () => {
     }
   };
 
+  const getSearchedNameHandler = (searchedVal) => {
+    setSearchTerm(searchedVal);
+  };
+
+  if (isLoading) content = fallback;
+
+  if (isError) {
+    content = (
+      <Alert severity="error" variant="filled">
+        {error}
+      </Alert>
+    );
+  }
+
+  if (data) {
+    content = <AdoptionsList onDelete={deletePostHandler} adopts={data.posts} />;
+    alertContent = (
+      <div className="px-3 d-flex">
+        <Alert
+          className="fs-4 d-flex align-items-center"
+          severity="info"
+          sx={{ width: "100%" }}
+        >
+          <em className="fw-bold">{data.postsCount}</em>{" "}
+          <span>match(es) found...</span>
+        </Alert>
+      </div>
+    );
+  }
+
   return (
     <div className="container-fluid py-4">
       <div className="row">
         <div className="col-12">
           <div className="card my-4">
             <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div className="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+              <div className="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex align-items-center justify-content-between">
                 <h6 className="text-white text-capitalize ps-3">
                   Adoption Posts
                 </h6>
+                <div className="pe-3 d-flex align-items-center flex-column">
+                  <SearchBox
+                    placeholder="Find by location..."
+                    onSubmit={getSearchedNameHandler}
+                  />
+                </div>
               </div>
             </div>
             <div className="card-body px-0 pb-2">
               <div className="table-responsive p-0">
+                {searchTerm && alertContent}
                 <table className="table align-items-center justify-content-center mb-0">
                   <thead>
                     <tr>
@@ -75,7 +125,7 @@ const AdoptPostsPage = () => {
                       <th />
                     </tr>
                   </thead>
-                  <Suspense fallback={fallback}>
+                  {allAdoptPost && !searchTerm && <Suspense fallback={fallback}>
                     <Await resolve={allAdoptPost}>
                       {(data) => (
                         <AdoptionsList
@@ -84,7 +134,8 @@ const AdoptPostsPage = () => {
                         />
                       )}
                     </Await>
-                  </Suspense>
+                  </Suspense>}
+                  {searchTerm && content}
                 </table>
               </div>
             </div>

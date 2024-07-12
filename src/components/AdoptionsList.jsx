@@ -38,8 +38,8 @@ const AdoptionsList = ({ adopts, onDelete }) => {
                 <span
                   className={`badge badge-sm ${
                     post.adopted
-                      ? "bg-gradient-success"
-                      : "bg-gradient-secondary"
+                      ? "bg-gradient-secondary"
+                      : "bg-gradient-success"
                   }`}
                 >
                   {post.adopted ? "adopted" : "available"}
@@ -73,9 +73,13 @@ const AdoptionsList = ({ adopts, onDelete }) => {
           ))}
         </tbody>
       ) : (
-        <div className="text-center">
-          <h2 className="text-warning"></h2>
-        </div>
+        <tbody>
+          <tr className="text-center">
+            <td colSpan={5}>
+              <h2 className="mt-3 mb-3 text-warning">Nothing found!</h2>
+            </td>
+          </tr>
+        </tbody>
       )}
 
       <AnimatePresence>

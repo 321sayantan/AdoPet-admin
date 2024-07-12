@@ -17,11 +17,14 @@ const AuthContextProvider = ({ children }) => {
     setAdminJwt(storedJwt);
   }, []);
 
-  // useEffect(() => {
-  //   if (!isTokenVerified()) {
-  //     logout();
-  //   }
-  // });
+  useEffect(() => {
+    isTokenVerified().then((data) => {
+      console.log(data);
+      if (!data) {
+        logout();
+      }
+    });
+  }, []);
 
   function login(token) {
     if (token) {
@@ -37,21 +40,27 @@ const AuthContextProvider = ({ children }) => {
     localStorage.removeItem("admin-jwt");
   }
 
-  // async function isTokenVerified() {
-  //   try {
-  //     const response = await fetch("http://localhost:5000/user/validateUser", {
-  //       headers: {
-  //         authorization: `Bearer ${jwt}`,
-  //       },
-  //     });
-  //     const result = await response.json();
-  //     console.log(result.msg);
+  async function isTokenVerified() {
+    try {
+      const jwt = localStorage.getItem("admin-jwt");
+      // console.log(jwt)
+      // const response = await fetch("http://localhost:5000/user/validateUser", {
+      const response = await fetch(
+        "https://adopet-backend.onrender.com/user/validateUser",
+        {
+          headers: {
+            authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      const result = await response.json();
+      console.log(result.msg);
 
-  //     return result.verified;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+      return result.verified;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const authValue = {
     isAuthenticated,

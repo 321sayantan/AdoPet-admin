@@ -36,9 +36,13 @@ const RecentRescuesList = ({ posts }) => {
           ))}
         </tbody>
       ) : (
-        <div className="text-center">
-          <h2 className="text-warning"></h2>
-        </div>
+        <tbody>
+          <tr className="text-center">
+            <td colSpan={5}>
+              <h2 className="mt-3 mb-3 text-warning">Nothing found!</h2>
+            </td>
+          </tr>
+        </tbody>
       )}
     </>
   );

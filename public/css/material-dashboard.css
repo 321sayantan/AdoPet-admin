@@ -3507,7 +3507,6 @@ textarea.form-control.is-valid {
 }
 
 .invalid-feedback {
-  display: none;
   width: 100%;
   margin-top: 0.25rem;
   font-size: 0.875em;
@@ -5303,6 +5302,16 @@ fieldset:disabled .btn {
   flex: 1 1 auto;
   padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
   color: var(--bs-card-color);
+}
+
+.card-body .map-link a {
+  color: var(--bs-info);
+  border-radius: 6px;
+  transition: 0.4s;
+}
+
+.card-body .map-link a:hover {
+  background: #d9e7ff;
 }
 
 .card-title {
@@ -23577,6 +23586,7 @@ hr.horizontal.gray-light {
 @media screen and (max-width: 768px) {
   .navbar-collapse .navbar-nav {
     width: 100%;
+    justify-content: space-between;
   }
 }
 

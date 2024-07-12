@@ -76,6 +76,25 @@ async function loadAllUsers(adminJwt) {
     }
 }
 
+async function loadAllUsersMap(adminJwt) {
+    try {
+        const response = await fetch("http://localhost:5000/admin/allUserMap", {
+            headers: {
+                "Content-Type": "application/json",
+                'authorization': `Bearer ${adminJwt}`,
+            },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data || "Failed to fetch");
+        }
+        // console.log(data);
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export function loader() {
     const adminJwt = localStorage.getItem('admin-jwt')
     return defer({
@@ -83,5 +102,6 @@ export function loader() {
         allAdoptPost: loadAlladoptPosts(adminJwt),
         allRescuePost: loadAllrescuePosts(adminJwt),
         allUsers: loadAllUsers(adminJwt),
+        usersMap: loadAllUsersMap(adminJwt)
     });
 }

@@ -4,12 +4,15 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./misc/httpRequests";
 import { Root } from "./pages/Root";
 import { Dashboard } from "./pages/Dashboard";
 import Login from "./pages/Login";
 import TablesSection from "./pages/TablesSection";
 import AdoptPostsPage from "./pages/AdoptPostsPage";
 import RescuePostsPage from "./pages/RescuePostsPage";
+import VectorMapPage from "./pages/VectorMapPage";
 // import Profile from "./pages/Profile";
 // import Billing from "./pages/Billing";
 import { loader } from "./misc/loaders";
@@ -55,6 +58,15 @@ const router = createBrowserRouter([
         ),
         loader: loader,
       },
+      {
+        path: "tables/users-locations",
+        element: (
+          <PrivateRoute>
+            <VectorMapPage />
+          </PrivateRoute>
+        ),
+        loader: loader
+      },
       // { path: "profile", element: <Profile /> },
     ],
   },
@@ -67,7 +79,11 @@ function PrivateRoute({ children }) {
 }
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
