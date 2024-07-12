@@ -14,7 +14,8 @@ const Login = () => {
   const loginDataHandler = async (loginData) => {
     try {
       const response = await toast.promise(
-        fetch("http://localhost:5000/admin/login", {
+        // fetch("http://localhost:5000/admin/login", {
+        fetch("https://adopet-backend.onrender.com/admin/login", {
           method: "POST",
           body: JSON.stringify(loginData),
           headers: {

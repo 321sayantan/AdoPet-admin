@@ -28,13 +28,17 @@ const RescuePostsPage = () => {
   const deletePostHandler = async (id) => {
     try {
       const response = await toast.promise(
-        fetch(`http://localhost:5000/admin/deleteRescuePost/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            'authorization': `Bearer ${adminJwt}`,
-          },
-        }),
+        // fetch(`http://localhost:5000/admin/deleteRescuePost/${id}`, {
+        fetch(
+          `https://adopet-backend.onrender.com/admin/deleteRescuePost/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${adminJwt}`,
+            },
+          }
+        ),
         {
           pending: "Deleting post...",
         }

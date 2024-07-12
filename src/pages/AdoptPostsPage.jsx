@@ -28,13 +28,17 @@ const AdoptPostsPage = () => {
   const deletePostHandler = async (id) => {
     try {
       const response = await toast.promise(
-        fetch(`http://localhost:5000/admin/deleteAdoptPost/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            'authorization': `Bearer ${adminJwt}`,
-          },
-        }),
+        // fetch(`http://localhost:5000/admin/deleteAdoptPost/${id}`, {
+        fetch(
+          `https://adopet-backend.onrender.com/admin/deleteAdoptPost/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${adminJwt}`,
+            },
+          }
+        ),
         {
           pending: "Deleting post...",
         }
