@@ -16,6 +16,7 @@ import VectorMapPage from "./pages/VectorMapPage";
 // import Profile from "./pages/Profile";
 // import Billing from "./pages/Billing";
 import { loader } from "./misc/loaders";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,9 @@ const router = createBrowserRouter([
 
 function PrivateRoute({ children }) {
   const isAuthenticated = localStorage.getItem("admin-jwt");
+  useEffect(()=>{
+    console.log(111,isAuthenticated)
+  },[])
   return isAuthenticated ? children : <Navigate to="../admin" />;
 }
 

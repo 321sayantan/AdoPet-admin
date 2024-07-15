@@ -5,8 +5,8 @@ export const queryClient = new QueryClient();
 // for users
 export async function fetchFilteredUsers({ signal, searchTerm }) {
     const adminJwt = localStorage.getItem('admin-jwt')
-    let url = `http://localhost:5000/admin/filterUsers?search=${searchTerm}`;
-    // let url = `https://adopet-backend.onrender.com/admin/filterUsers?search=${searchTerm}`;
+    // let url = `http://localhost:5000/admin/filterUsers?search=${searchTerm}`;
+    let url = `https://adopet-backend.onrender.com/admin/filterUsers?search=${searchTerm}`;
 
     const response = await fetch(url, {
         headers: {
@@ -30,8 +30,8 @@ export async function fetchFilteredUsers({ signal, searchTerm }) {
 // for adopt posts
 export async function fetchFilteredAdoptposts({ signal, searchTerm }) {
     const adminJwt = localStorage.getItem('admin-jwt')
-    let url = `http://localhost:5000/admin/filterAdoptPosts?search=${searchTerm}`;
-    // let url = `https://adopet-backend.onrender.com/admin/filterAdoptPosts?search=${searchTerm}`;
+    // let url = `http://localhost:5000/admin/filterAdoptPosts?search=${searchTerm}`;
+    let url = `https://adopet-backend.onrender.com/admin/filterAdoptPosts?search=${searchTerm}`;
 
     const response = await fetch(url, {
         headers: {
@@ -55,8 +55,8 @@ export async function fetchFilteredAdoptposts({ signal, searchTerm }) {
 // for adopt posts
 export async function fetchFilteredRescueposts({ signal, searchTerm }) {
     const adminJwt = localStorage.getItem('admin-jwt')
-    let url = `http://localhost:5000/admin/filterRescuePosts?search=${searchTerm}`;
-    // let url = `https://adopet-backend.onrender.com/admin/filterRescuePosts?search=${searchTerm}`;
+    // let url = `http://localhost:5000/admin/filterRescuePosts?search=${searchTerm}`;
+    let url = `https://adopet-backend.onrender.com/admin/filterRescuePosts?search=${searchTerm}`;
 
     const response = await fetch(url, {
         headers: {
