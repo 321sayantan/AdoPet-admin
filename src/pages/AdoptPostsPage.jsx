@@ -60,6 +60,11 @@ const AdoptPostsPage = () => {
     }
   };
 
+  const restrictPostHandler = async (id) => {
+    console.log("Restricted post with id: " + id);
+    //ekhane api ta lagiye dibi
+  };
+
   const getSearchedNameHandler = (searchedVal) => {
     setSearchTerm(searchedVal);
   };
@@ -134,6 +139,7 @@ const AdoptPostsPage = () => {
                       {(data) => (
                         <AdoptionsList
                           onDelete={deletePostHandler}
+                          onRestrict={restrictPostHandler}
                           adopts={data.allAdoptPost}
                         />
                       )}

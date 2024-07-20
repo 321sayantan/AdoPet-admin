@@ -3,12 +3,18 @@ import { AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 import { useState } from "react";
 
-const RescueList = ({ rescues, onDelete }) => {
+const RescueList = ({ rescues, onDelete, onRestrict }) => {
   const [open, setOpen] = useState(null);
+  const [open2, setOpen2] = useState(null);
 
   const closeModal = (id) => {
     onDelete(id);
     setOpen(null);
+  };
+
+  const closeModal2 = (id) => {
+    onRestrict(id);
+    setOpen2(null);
   };
 
   return (
@@ -60,6 +66,7 @@ const RescueList = ({ rescues, onDelete }) => {
                     type="button"
                     className="text-info font-weight-bold text-sm fs-5"
                     style={{ background: "none", border: "0", outline: "0" }}
+                    onClick={() => setOpen2(post._id)}
                   >
                     Manage
                   </button>
@@ -86,6 +93,7 @@ const RescueList = ({ rescues, onDelete }) => {
         </tbody>
       )}
 
+      {/* delete post modal */}
       <AnimatePresence>
         {open && (
           <Modal
@@ -124,6 +132,54 @@ const RescueList = ({ rescues, onDelete }) => {
                   type="button"
                   className="btn text-danger"
                   onClick={() => closeModal(open)}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
+      {/* manage post modal */}
+      <AnimatePresence>
+        {open2 && (
+          <Modal
+            title="Confirm ?"
+            className="restrictPost-confirm-modal"
+            onClose={() => setOpen2(null)}
+          >
+            <div className="modal-body py-3">
+              <h5
+                className="d-flex align-items-start"
+                style={{ fontWeight: "400" }}
+              >
+                <i
+                  className="material-icons opacity-10"
+                  style={{ fontSize: "2.2rem", color: "#00aaff" }}
+                >
+                  help
+                </i>
+                <span style={{ marginLeft: "0.5rem" }}>
+                  Do you want to restrict this post?
+                </span>
+              </h5>
+
+              <div
+                className="modal-footer px-0"
+                style={{ marginBottom: "-1rem" }}
+              >
+                <button
+                  type="button"
+                  className="btn text-secondary"
+                  onClick={() => setOpen2(null)}
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  className="btn text-info"
+                  onClick={() => closeModal2(open2)}
                 >
                   Yes
                 </button>

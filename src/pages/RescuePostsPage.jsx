@@ -5,7 +5,7 @@ import SearchBox from "../components/SearchBox";
 import { Alert } from "@mui/material";
 import { toast } from "react-toastify";
 import { Await, useLoaderData, useNavigate } from "react-router-dom";
-import { Suspense, useContext,useState } from "react";
+import { Suspense, useContext, useState } from "react";
 import { AuthContext } from "../store/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFilteredRescueposts } from "../misc/httpRequests";
@@ -18,12 +18,12 @@ const RescuePostsPage = () => {
   const fallback = <RescuePostsSkeleton />;
   let content, alertContent;
 
-  const {data,isLoading, isError,error} = useQuery({
-    queryKey: ['filteredRescuePosts',{searchTerm}],
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["filteredRescuePosts", { searchTerm }],
     queryFn: ({ signal, queryKey }) =>
       fetchFilteredRescueposts({ signal, ...queryKey[1] }),
     enabled: searchTerm !== undefined,
-  })
+  });
 
   const deletePostHandler = async (id) => {
     try {
@@ -49,7 +49,7 @@ const RescuePostsPage = () => {
       if (response.ok) {
         // window.location.reload();
         navigate("../rescue-posts");
-        console.log('post of id: '+id+' deleted');
+        console.log("post of id: " + id + " deleted");
         toast.success(result.msg);
       } else {
         toast.error(result);
@@ -59,7 +59,12 @@ const RescuePostsPage = () => {
       console.error(err || "Something went wrong");
     }
   };
-  
+
+  const restrictPostHandler = async (id) => {
+    console.log("Restricted post with id: " + id);
+    //ekhane api ta lagiye dibi
+  };
+
   const getSearchedNameHandler = (searchedVal) => {
     setSearchTerm(searchedVal);
   };
@@ -110,7 +115,7 @@ const RescuePostsPage = () => {
             </div>
             <div className="card-body px-0 pb-2">
               <div className="table-responsive p-0">
-              {searchTerm && alertContent}
+                {searchTerm && alertContent}
                 <table className="table align-items-center justify-content-center mb-0">
                   <thead>
                     <tr>
@@ -129,16 +134,19 @@ const RescuePostsPage = () => {
                       <th />
                     </tr>
                   </thead>
-                  {allRescuePost && !searchTerm && <Suspense fallback={fallback}>
-                    <Await resolve={allRescuePost}>
-                      {(data) => (
-                        <RescueList
-                          rescues={data.allRescuePost}
-                          onDelete={deletePostHandler}
-                        />
-                      )}
-                    </Await>
-                  </Suspense>}
+                  {allRescuePost && !searchTerm && (
+                    <Suspense fallback={fallback}>
+                      <Await resolve={allRescuePost}>
+                        {(data) => (
+                          <RescueList
+                            rescues={data.allRescuePost}
+                            onDelete={deletePostHandler}
+                            onRestrict={restrictPostHandler}
+                          />
+                        )}
+                      </Await>
+                    </Suspense>
+                  )}
                   {searchTerm && content}
                 </table>
               </div>

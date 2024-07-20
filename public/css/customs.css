@@ -172,16 +172,19 @@
     background: #dcdcdc;
 }
 
+.restrictPost-confirm-modal,
 .deletePost-confirm-modal {
     width: 25rem !important;
     height: auto !important;
     padding: 0;
 }
 
+.restrictPost-confirm-modal .modal-header,
 .deletePost-confirm-modal .modal-header {
     border-radius: 10px 10px 0 0;
 }
 
+.restrictPost-confirm-modal span,
 .deletePost-confirm-modal span {
     color: #000;
 }
@@ -190,6 +193,11 @@
     background: var(--bs-danger) !important;
 }
 
+.restrictPost-confirm-modal .modal-header {
+    background: var(--bs-indigo) !important;
+}
+
+.restrictPost-confirm-modal .modal-header h2,
 .deletePost-confirm-modal .modal-header h2 {
     color: #fff !important;
 }

@@ -95,6 +95,9 @@ async function loadAllUsers(adminJwt) {
 async function loadAllUsersMap(adminJwt) {
     try {
         const response = await fetch("http://localhost:5000/admin/allUserMap", {
+          // const response = await fetch(
+          //   "https://adopet-backend.onrender.com/admin/allUserMap",
+          //   {
             headers: {
                 "Content-Type": "application/json",
                 'authorization': `Bearer ${adminJwt}`,
@@ -104,7 +107,7 @@ async function loadAllUsersMap(adminJwt) {
         if (!response.ok) {
             throw new Error(data || "Failed to fetch");
         }
-        // console.log(data);
+        console.log(data);
         return data;
     } catch (error) {
         console.error(error);
