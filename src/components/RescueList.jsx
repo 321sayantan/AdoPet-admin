@@ -33,7 +33,14 @@ const RescueList = ({ rescues, onDelete, onRestrict }) => {
                     />
                   </div>
                   <div className="my-auto">
-                    <h6 className="mb-0 text-sm">{post.vet_category}</h6>
+                    <h6 className="mb-0 text-sm">
+                      <a
+                        href={`https://adopet24.netlify.app/rescue/${post._id}`}
+                        target="_blank"
+                      >
+                        {post.vet_category}
+                      </a>
+                    </h6>
                   </div>
                 </div>
               </td>

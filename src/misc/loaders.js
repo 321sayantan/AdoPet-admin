@@ -94,17 +94,10 @@ async function loadAllUsers(adminJwt) {
 
 async function loadAllUsersMap(adminJwt) {
     try {
-<<<<<<< HEAD
-        const response = await fetch("http://localhost:5000/admin/allUserMap", {
-          // const response = await fetch(
-          //   "https://adopet-backend.onrender.com/admin/allUserMap",
-          //   {
-=======
         // const response = await fetch("http://localhost:5000/admin/allUserMap", {
         const response = await fetch(
           "https://adopet-backend.onrender.com/admin/allUserMap",
           {
->>>>>>> 22fcb4ee7625855d74c01961abba39bc1869c48f
             headers: {
               "Content-Type": "application/json",
               authorization: `Bearer ${adminJwt}`,
