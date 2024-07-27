@@ -61,8 +61,36 @@ const AdoptPostsPage = () => {
   };
 
   const restrictPostHandler = async (id) => {
-    console.log("Restricted post with id: " + id);
-    //ekhane api ta lagiye dibi
+    // console.log("Restricted post with id: " + id);
+    try {
+      const response = await toast.promise(
+        // fetch(`http://localhost:5000/admin/restrictAdoptPost/${id}`, {
+          fetch(
+            `https://adopet-backend.onrender.com/admin/restrictAdoptPost/${id}`,
+            {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${adminJwt}`,
+          },
+        }),
+        {
+          pending: "Restricting post...",
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok) {
+        // navigate("../rescue-posts");
+        toast.success(result.message);
+      } else {
+        toast.error(result);
+        console.error(result);
+      }
+    } catch (err) {
+      console.error(err || "Something went wrong");
+    }
   };
 
   const getSearchedNameHandler = (searchedVal) => {
