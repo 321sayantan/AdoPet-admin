@@ -36,18 +36,18 @@ const UsersList = ({ users, onDelete }) => {
                   {user.is_volunteer ? "Volunteer" : "User"}
                 </p>
                 <p className="text-xs text-secondary mb-0">
-                  {user.address ? user.address : '---'}
+                  {user.address ? user.address : "---"}
                 </p>
               </td>
               <td className="align-middle text-center text-sm">
                 <span
                   className={`badge badge-sm ${
-                    user.address === ""
+                    user.address
                       ? "bg-gradient-success"
                       : "bg-gradient-secondary"
                   }`}
                 >
-                  {user.address === "" ? "Not-registered" : "registered"}
+                  {user.address ? "Registered" : "Not-registered"}
                 </span>
               </td>
               <td className="align-middle text-center">
