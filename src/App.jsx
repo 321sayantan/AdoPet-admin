@@ -13,6 +13,7 @@ import TablesSection from "./pages/TablesSection";
 import AdoptPostsPage from "./pages/AdoptPostsPage";
 import RescuePostsPage from "./pages/RescuePostsPage";
 import VectorMapPage from "./pages/VectorMapPage";
+import MainErrorFallback from "./components/MainErrorFallback";
 // import Profile from "./pages/Profile";
 // import Billing from "./pages/Billing";
 import { loader } from "./misc/loaders";
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <MainErrorFallback />,
     children: [
       {
         index: true,
@@ -66,7 +68,7 @@ const router = createBrowserRouter([
             <VectorMapPage />
           </PrivateRoute>
         ),
-        loader: loader
+        loader: loader,
       },
       // { path: "profile", element: <Profile /> },
     ],
@@ -76,9 +78,9 @@ const router = createBrowserRouter([
 
 function PrivateRoute({ children }) {
   const isAuthenticated = localStorage.getItem("admin-jwt");
-  useEffect(()=>{
-    console.log(111,isAuthenticated)
-  },[])
+  useEffect(() => {
+    console.log(111, isAuthenticated);
+  }, []);
   return isAuthenticated ? children : <Navigate to="../admin" />;
 }
 
